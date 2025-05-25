@@ -7,27 +7,21 @@
 # 10-20 : 20%
 # aboove 20 : 30%
 
-salary = float(input("Enter the salary : "))
-tax = 0
-salary = salary*100000
-HRA = salary * 0.1
-DA = salary * 0.05
-PF = salary * 0.03
+ctc = int(input("Enter the salary : "))
 
-if salary < 500000:
-  tax = 0
+if ctc < 500000:
+  salary = ctc*.82
 
-elif salary >= 500000 and salary <1000000 :
-  tax = salary * 0.1
+elif ctc < 1000000:
+  salary = ctc*.72
 
-elif salary >= 1000000 and salary <2000000 :
-  tax = salary * 0.2
+elif ctc<2000000 :
+  salary = ctc*.62
 
 else:
-  tax = salary * 0.3
+  salary = ctc*.52
 
-in_hand_salary = salary - (HRA + DA + PF + tax)
-print("In-hand salary:", in_hand_salary)
+print("Your in hand monthly salary will be:", round(salary/12.2))
 
 
 # Problem 2: Write a program that take a user input of three angles and will find out whether it can form a triangle or not.
@@ -37,12 +31,8 @@ a = int(input("Enter the angle 1 : "))
 b = int(input("Enter the angle 2 : "))
 c = int(input("Enter the angle 3 : "))
 
-if a > 0 and b > 0 and c > 0:
-  if (a+b+c) == 180:
-    print("Triangle can be formed")
-  else:
-    print("Triangle can not be formed")
-
+if (a+b+c) == 180 and a > 0 and b > 0 and c > 0:
+  print("Triangle can be formed")
 else:
   print("Triangle can not be formed")
   
@@ -50,8 +40,8 @@ else:
 # Problem 3: Write a program that will take user input of cost price and selling price and determines whether its a loss or a profit.
 
 
-cost_price = float(input("Enter the cost price : "))
-selling_price = float(input("Enter the selling price : "))
+cost_price = int(input("Enter the cost price : "))
+selling_price = int(input("Enter the selling price : "))
 
 if cost_price > selling_price:
   print("Loss")
@@ -71,34 +61,29 @@ else:
 
 
 
-while(True):
-  print("1. cm to ft")
-  print("2. km to miles")
-  print("3. USD to INR")
-  print("4. exit")
-
-  choose = int(input("choose : "))
-
-  if choose == 1:
-    value = float(input("Enter the value : "))
-    ft = value/30.48
-    print("Value in feet: ", ft)
-
-  elif choose == 2:
-    value = float(input("Enter the vlaue : "))
-    miles = value/1.609
-    print("Value in miles: ", miles)
+menu = input("""
+  hi select an option
+  1. cm to ft
+  2. km to miles
+  3. USD to INR
+  4. exit
   
-  elif choose == 3:
-    value = float(input("Enter the vlaue : "))
-    INR = value*85.17
-    print("Value in INR : ", INR)
+  """)
 
-  elif choose == 4:
-    break
+if menu == '1':
+    cm = float(input("Enter the cm value : "))
+    print("Value in feet: ", cm*0.032)
+
+elif menu == '2':
+    km = float(input("Enter the km vlaue : "))
+    print("Value in miles: ", km*0.62)
   
-  else:
-    print("Invalid choice. Please try again.")
+elif menu == '3':
+    usd = float(input("Enter the usdvlaue : "))
+    print("Value in INR : ", usd*80.)
+  
+else:
+    exit()
     
     
 # Problem 5 - Exercise 12: Display Fibonacci series up to 10 terms.
@@ -107,13 +92,12 @@ while(True):
 
 n0 = 0
 n1 = 1
-ans = 0
 n = int(input("Enter the value : "))
 
-print(n0,n1,end=" ")
-for i in range(1, n-1):
+for i in range(1, n+1):
+  print(n0, end=" ")
   ans = n0+n1
-  print(ans, end=" ")
+  
   n0=n1
   n1=ans
   
@@ -173,8 +157,8 @@ print(sum)
 
 count = 0
 sum = 0
-flag = True
-while(flag):
+
+while True:
   value = int(input("Enter the value : "))
   if value == 0:
     break
@@ -203,4 +187,123 @@ print(','.join(result))
 # Problem 10: Write a program, which will find all such numbers between 1000 and 3000 (both included) such that each digit of the number is an even number. The numbers obtained should be printed in a space-separated sequence on a single line.
 
 
+L = []
+for i in range(1000, 3001):
+  flag = True
 
+  current = i
+
+  while current > 0:
+    last = current%10
+    if last%2 != 0:
+      flag = False
+      break
+    current = current//10
+
+  if flag:
+    L.append(str(i))
+
+print(", ".join(L))
+
+
+
+# Problem 11: A robot moves in a plane starting from the original point (0,0). The robot can move toward UP, DOWN, LEFT and RIGHT with a given steps.
+# The trace of robot movement is shown as the following:
+# UP 5
+# DOWN 3
+# LEFT 3
+# RIGHT 2
+# !
+
+# The numbers after the direction are steps.
+
+# ! means robot stop there.
+
+# Please write a program to compute the distance from current position after a sequence of movement and original point.
+
+# If the distance is a float, then just print the nearest integer.
+
+# Example:
+# Input:
+
+# UP 5
+# DOWN 3
+# LEFT 3
+# RIGHT 2
+# !
+# Output:
+
+# 2
+
+
+pos = [0,0]
+while True:
+  s = input('Enter the robot path ')
+  if s=='!':
+    break
+
+  direction = s.split()[0]
+  steps = int(s.split()[1])
+
+  if direction == 'UP':
+    pos[1] = pos[1] + steps
+  elif direction == 'DOWN':
+    pos[1] = pos[1] - steps
+  elif direction == 'LEFT':
+    pos[0] = pos[0] - steps
+  elif direction == 'RIGHT':
+    pos[0] = pos[0] + steps
+  else:
+    pass
+
+print(int(round((pos[0]**2 + pos[1]**2)**0.5)))
+
+
+
+# Problem 12:Write a program to print whether a given number is a prime number or not
+
+
+num = int(input('Enter the num : '))
+
+flag = True
+for i in range(2, num):
+  if num%i == 0:
+    flag = False
+    break
+
+if flag:
+  print('Prime')
+else:
+  print('Not Prime')
+  
+  
+# Problem 13:Print all the Armstrong numbers in a given range.
+# Range will be provided by the user
+# Armstrong number is a number that is equal to the sum of cubes of its digits. For example 0, 1, 153, 370, 371 and 407 are the Armstrong numbers.
+
+
+start = int(input("Enter the start range : "))
+end = int (input("Enter the end range: "))
+
+for i in range(start, end):
+    num = 0
+    real=i
+    
+    while real > 0:
+      num += ((real%10)**3)
+      real = real//10
+      
+    if i==num:
+          print(num, end=" ")
+      
+
+
+# Problem 14:Calculate the angle between the hour hand and minute hand.
+# Note: There can be two angles between hands; we need to print a minimum of two. Also, we need to print the floor of the final result angle. For example, if the final angle is 10.61, we need to print 10.
+
+# Input:
+# H = 9 , M = 0
+# Output:
+# 90
+# Explanation:
+# The minimum angle between hour and minute hand when the time is 9 is 90 degress.
